@@ -7,31 +7,30 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="app">
-    <header>
-      <h1 id="title">Pomodoro Timer</h1>
-      <div class="controls-top">
-        <select id="languageSelector">
-          <option value="en">English</option>
-          <option value="es">Español</option>
-          <option value="fr">Français</option>
-          <option value="ru">Русский</option>
-          <option value="zh">中文</option>
-          <option value="ja">日本語</option>
-          <option value="ko">한국어</option>
-        </select>
-        <button id="themeToggle" title="Toggle Dark Mode">🌙</button>
-      </div>
-    </header>
+  <div class="container">
+    <h1 id="title">Pomodoro Timer</h1>
 
-    <main>
+    <div class="language">
+      <select id="languageSelector">
+        <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="ru">Русский</option>
+        <option value="zh">中文</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+      </select>
+    </div>
+
+    <div class="timer">
       <h2 id="timerLabel">Focus</h2>
       <div id="time">25:00</div>
-      <div class="buttons">
-        <button id="start">Start</button>
-        <button id="reset">Reset</button>
-      </div>
-    </main>
+    </div>
+
+    <div class="controls">
+      <button id="start">Start</button>
+      <button id="reset">Reset</button>
+    </div>
   </div>
 
   <script src="script.js"></script>
