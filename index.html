@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pomodoro Timer</title>
+  <meta name="description" content="Free, multilingual Pomodoro timer (25-5 with long break after 4 cycles). PWA-ready.">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Ctext y='1em' font-size='96'%3E%F0%9F%8D%85%3C/text%3E%3C/svg%3E">
+  <!-- Chart.js for stats -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <header class="topbar">
+      <h1 data-i18n="title">تایمر پومودورو</h1>
+
+      <div class="actions">
+        <button id="theme-toggle" title="Theme">🌗</button>
+        <div class="lang-direction">
+          <select id="lang-select" aria-label="Language">
+            <option value="fa" selected>فارسی</option>
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+            <option value="de">Deutsch</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="ru">Русский</option>
+            <option value="zh">中文</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
+            <option value="tr">Türkçe</option>
+          </select>
+          <button id="dir-toggle" title="Switch text direction">RTL/LTR</button>
+          <button id="install-btn" hidden>Install</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="status">
+      <span id="phase-label" data-i18n="ready">آماده</span>
+      <span id="cycle-label">0 / 4</span>
+    </div>
+
+    <div class="timer" id="timer-display">25:00</div>
+
+    <div class="controls">
+      <button id="start-btn" class="primary" data-i18n="start">شروع</button>
+      <button id="pause-btn" data-i18n="pause" disabled>توقف</button>
+      <button id="reset-btn" data-i18n="reset">ریست</button>
+      <label class="sound">
+        <input type="checkbox" id="sound-toggle" checked>
+        <span data-i18n="sound">صدا</span>
+      </label>
+      <label class="sound">
+        <input type="checkbox" id="vibrate-toggle" checked>
+        <span data-i18n="vibrate">ویبره</span>
+      </label>
+    </div>
+
+    <div class="config">
+      <details>
+        <summary data-i18n="settings">تنظیمات (اختیاری)</summary>
+        <label><span data-i18n="focus_minutes">مدت تمرکز (دقیقه):</span>
+          <input type="number" id="focus-min" value="25" min="1">
+        </label>
+        <label><span data-i18n="short_minutes">استراحت کوتاه (دقیقه):</span>
+          <input type="number" id="short-break-min" value="5" min="1">
+        </label>
+        <label><span data-i18n="long_minutes">استراحت بلند بعد از ۴ چرخه (دقیقه):</span>
+          <input type="number" id="long-break-min" value="35" min="1">
+        </label>
+      </details>
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <section class="stats">
+      <h2 data-i18n="stats_title">آمار تمرین</h2>
+      <canvas id="statsChart" height="160"></canvas>
+      <div class="stats-bar">
+        <div><span data-i18n="today">امروز:</span> <strong id="today-focus">0</strong> <span data-i18n="min">دقیقه</span></div>
+        <div><span data-i18n="this_week">این هفته:</span> <strong id="week-focus">0</strong> <span data-i18n="min">دقیقه</span></div>
+      </div>
+    </section>
+
+    <div class="tips">
+      <p data-i18n="pattern">
+        الگو: ۴ بار <strong>تمرکز ۲۵ دقیقه</strong> + <strong>استراحت ۵ دقیقه</strong>، سپس یک <strong>استراحت ۳۵ دقیقه</strong>.
+      </p>
+      <p data-i18n="hint">در پایان هر بخش، پیام روی صفحه نمایش داده می‌شود.</p>
+    </div>
+
+    <footer class="footer">
+      <a href="#" id="share-btn" data-i18n="share">اشتراک‌گذاری</a>
+      <span>•</span>
+      <a href="https://github.com/" target="_blank" rel="noopener">Open Source</a>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Service Worker registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js');
+      });
+    }
+  </script>
+</body>
+</html>
