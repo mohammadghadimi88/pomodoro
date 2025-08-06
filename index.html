@@ -1,36 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Pomodoro Timer</title>
   <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Free, multilingual Pomodoro timer (25-5 with long break after 4 cycles).">
 </head>
 <body>
   <div class="container">
-    <h1 id="title">Pomodoro Timer</h1>
+    <header class="topbar">
+      <h1 data-i18n="title">تایمر پومودورو</h1>
 
-    <div class="language">
-      <select id="languageSelector">
-        <option value="en">English</option>
-        <option value="es">Español</option>
-        <option value="fr">Français</option>
-        <option value="ru">Русский</option>
-        <option value="zh">中文</option>
-        <option value="ja">日本語</option>
-        <option value="ko">한국어</option>
-      </select>
+      <div class="lang-direction">
+        <select id="lang-select" aria-label="Language">
+          <option value="fa" selected>فارسی</option>
+          <option value="en">English</option>
+          <option value="ar">العربية</option>
+          <option value="de">Deutsch</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="tr">Türkçe</option>
+          <option value="ru">Русский</option>
+          <option value="hi">हिंदी</option>
+          <option value="zh">中文</option>
+        </select>
+        <button id="dir-toggle" title="Switch text direction">RTL/LTR</button>
+      </div>
+    </header>
+
+    <div class="status">
+      <span id="phase-label" data-i18n="ready">آماده</span>
+      <span id="cycle-label">0 / 4</span>
     </div>
 
-    <div class="timer">
-      <h2 id="timerLabel">Focus</h2>
-      <div id="time">25:00</div>
-    </div>
+    <div class="timer" id="timer-display">25:00</div>
 
     <div class="controls">
-      <button id="start">Start</button>
-      <button id="reset">Reset</button>
+      <button id="start-btn" data-i18n="start">شروع</button>
+      <button id="pause-btn" data-i18n="pause" disabled>توقف</button>
+      <button id="reset-btn" data-i18n="reset">ریست</button>
     </div>
+
+    <div class="config">
+      <details>
+        <summary data-i18n="settings">تنظیمات (اختیاری)</summary>
+        <label><span data-i18n="focus_minutes">مدت تمرکز (دقیقه):</span>
+          <input type="number" id="focus-min" value="25" min="1">
+        </label>
+        <label><span data-i18n="short_minutes">استراحت کوتاه (دقیقه):</span>
+          <input type="number" id="short-break-min" value="5" min="1">
+        </label>
+        <label><span data-i18n="long_minutes">استراحت بلند بعد از ۴ چرخه (دقیقه):</span>
+          <input type="number" id="long-break-min" value="35" min="1">
+        </label>
+      </details>
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <div class="tips">
+      <p data-i18n="pattern">
+        الگو: ۴ بار <strong>تمرکز ۲۵ دقیقه</strong> + <strong>استراحت ۵ دقیقه</strong>، سپس یک <strong>استراحت ۳۵ دقیقه</strong>.
+      </p>
+      <p data-i18n="hint">در پایان هر بخش، پیام روی صفحه نمایش داده می‌شود.</p>
+    </div>
+
+    <footer class="footer">
+      <a href="https://github.com/" target="_blank" rel="noopener">Open Source</a>
+    </footer>
   </div>
 
   <script src="script.js"></script>
